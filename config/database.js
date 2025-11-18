@@ -7,6 +7,10 @@ const DB_NAME = process.env.DB_NAME || 'college_management';
 const DB_USER = process.env.DB_USER || 'postgres';
 const DB_PASSWORD = process.env.DB_PASSWORD || '17982078';
 
+// Detect if running on Render
+const isRender = process.env.RENDER === 'true' || process.env.RENDER_EXTERNAL_HOSTNAME;
+
+// Sequelize connection
 const sequelize = new Sequelize({
   host: DB_HOST,
   port: DB_PORT,
@@ -14,13 +18,21 @@ const sequelize = new Sequelize({
   username: DB_USER,
   password: DB_PASSWORD,
   dialect: 'postgres',
-  logging: false, // Set to console.log to see SQL queries
+  logging: false,
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  dialectOptions: isRender
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      }
+    : {}
 });
 
 // Test database connection
