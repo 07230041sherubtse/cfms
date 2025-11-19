@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config()
 
 // Database configuration (env-enabled)
 const DB_HOST = process.env.DB_HOST || 'localhost';
