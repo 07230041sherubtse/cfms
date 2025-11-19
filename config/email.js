@@ -4,7 +4,7 @@ require('dotenv').config()
 // Email configuration
 const transporter = nodemailer.createTransport({
   // service: process.env.MAIL_SERVICE || 'gmail',
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
   auth: {
