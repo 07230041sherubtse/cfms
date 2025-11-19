@@ -2,16 +2,19 @@ const nodemailer = require('nodemailer');
 
 // Email configuration
 const transporter = nodemailer.createTransport({
-  service: process.env.MAIL_SERVICE || 'gmail',
+  // service: process.env.MAIL_SERVICE || 'gmail',
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
-    user: process.env.MAIL_USER || '07230043.sherubtse@rub.edu.bt',
-    pass: process.env.MAIL_PASS || 'laqq xrfd zblc srde'
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS,
   }
 });
 
 // Send verification email
 const sendVerificationEmail = async (email, verificationToken, name) => {
-  const verificationUrl = `http://localhost:5000/verify-email?token=${verificationToken}`;
+  const verificationUrl = `https://cfms-1kdr.onrender.com/verify-email?token=${verificationToken}`;
   
   const mailOptions = {
     from: process.env.MAIL_FROM || (process.env.MAIL_USER || '07230043.sherubtse@rub.edu.bt'),
@@ -61,7 +64,7 @@ const sendVerificationEmail = async (email, verificationToken, name) => {
 
 // Send password reset email
 const sendPasswordResetEmail = async (email, resetToken, name) => {
-  const resetUrl = `http://localhost:5000/reset-password?token=${resetToken}`;
+  const resetUrl = `https://cfms-1kdr.onrender.com/reset-password?token=${resetToken}`;
 
   const mailOptions = {
     from: process.env.MAIL_FROM || (process.env.MAIL_USER || '07230043.sherubtse@rub.edu.bt'),
