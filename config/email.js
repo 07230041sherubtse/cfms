@@ -1,16 +1,15 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config()
 
-// Email configuration
+// Email configuration (RESEND SMTP)
 const transporter = nodemailer.createTransport({
-  // service: process.env.MAIL_SERVICE || 'gmail',
-  host: "smtp-relay.brevo.com",
+  host: "smtp.resend.com",
   port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  }
+    user: "resend", // ALWAYS "resend"
+    pass: process.env.RESEND_API_KEY, // Your API Key
+  },
 });
 
 // Send verification email
@@ -18,7 +17,7 @@ const sendVerificationEmail = async (email, verificationToken, name) => {
   const verificationUrl = `https://cfms-1kdr.onrender.com/verify-email?token=${verificationToken}`;
   
   const mailOptions = {
-    from: process.env.MAIL_FROM || (process.env.MAIL_USER || '07230043.sherubtse@rub.edu.bt'),
+    from: process.env.MAIL_FROM,
     to: email,
     subject: 'Verify Your Email - College Management System',
     html: `
